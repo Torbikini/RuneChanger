@@ -107,8 +107,8 @@ public class Loot extends ClientModule {
                                 .findFirst();
                         if (mastery.isPresent()) {
                             // Player has mastery, check champion level
-                            if (mastery.get().championLevel < 4 || mastery.get().championLevel == 7) {
-                                // disenchant, because champion level is below 4 (champion not played often enough) or champion level is max
+                            if (mastery.get().championLevel == 7) {
+                                // disenchant, because champion level is max
                                 for (int i = 0; i < item.count; i++) {
                                     getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
                                 }
@@ -116,6 +116,11 @@ public class Loot extends ClientModule {
                             else if (mastery.get().championLevel == 6) {
                                 // disenchant and leave only one shard, because player might need that one shard for mastery 7
                                 for (int i = 0; i < item.count - 1; i++) {
+                                    getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
+                                }
+                            } else {
+                                // save 3 shards so you can unlock and evolve mastery (if desired)
+                                for ( int i = 0; i < item.count - 3; i++ ) {
                                     getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
                                 }
                             }
