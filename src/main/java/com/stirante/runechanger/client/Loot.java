@@ -110,26 +110,34 @@ public class Loot extends ClientModule {
                             if (mastery.get().championLevel == 7) {
                                 // disenchant, because champion level is max
                                 for (int i = 0; i < item.count; i++) {
-                                    getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
+                                    System.out.println(item.lootId + "saving 0");
+                                    //getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
                                 }
-                            }
-                            else if (mastery.get().championLevel == 6) {
+                            } else if (mastery.get().championLevel == 6) {
                                 // disenchant and leave only one shard, because player might need that one shard for mastery 7
                                 for (int i = 0; i < item.count - 1; i++) {
-                                    getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
+                                    System.out.println(item.lootId + "saving 1");
+                                    //getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
                                 }
                             } else {
                                 // save 3 shards so you can unlock and evolve mastery (if desired)
-                                for ( int i = 0; i < item.count - 3; i++ ) {
-                                    getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
+                                for (int i = 0; i < item.count - 3; i++ ) {
+                                    System.out.println(item.lootId + "saving 3");
+                                    // getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             // disenchant, because player doesn't have mastery for that champion
-                            for (int i = 0; i < item.count; i++) {
+                            /*for (int i = 0; i < item.count - 3; i++) {
                                 getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
-                            }
+                            }*/
+                        }
+                    } else {
+                        // disenchant, because player doesn't have mastery for that champion
+                        for (int i = 0; i < item.count - 3; i++) {
+                            //getApi().executePost("/lol-loot/v1/recipes/CHAMPION_RENTAL_disenchant/craft", new String[]{item.lootId});
+                            //System.out.println("Saving 3");
+                            System.out.println(item.lootId + "saving 3");
                         }
                     }
                 }
